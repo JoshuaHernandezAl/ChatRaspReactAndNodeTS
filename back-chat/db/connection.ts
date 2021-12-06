@@ -7,7 +7,7 @@ dotenv.config();
 const db=new Sequelize('ChatRaspTS',`${process.env.userDB}`,`${process.env.passwordDB}`,{
     host:'localhost',
     dialect:'mysql',
-    // logging:false,
+    logging:false,
 });
 
 export default db;

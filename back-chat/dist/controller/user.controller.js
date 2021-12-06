@@ -12,25 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.login = exports.deleteUser = exports.signup = exports.getUser = void 0;
+exports.login = exports.signup = void 0;
 const User_1 = __importDefault(require("../models/User"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jwt_1 = __importDefault(require("../helpers/jwt"));
-const getUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    const user = yield User_1.default.findByPk(id);
-    if (!user) {
-        return res.status(403).json({
-            ok: false,
-            msg: "Usuario no registrado",
-        });
-    }
-    res.json({
-        ok: true,
-        user,
-    });
-});
-exports.getUser = getUser;
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     try {
@@ -67,28 +52,6 @@ const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.signup = signup;
-const deleteUser = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { id } = req.params;
-    try {
-        const usuario = yield User_1.default.findByPk(id);
-        if (!usuario) {
-            return res.status(400).json({
-                msg: "No existe un usuario",
-            });
-        }
-        yield usuario.update({ state: false });
-        res.json({
-            usuario,
-        });
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).json({
-            msg: 'Error, comuniquese con el administrador',
-        });
-    }
-});
-exports.deleteUser = deleteUser;
 const login = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { username, password } = req.body;
     try {

@@ -10,7 +10,7 @@ export const Navbar = () => {
                         <NavLink to="/chat" className={({isActive})=>isActive?"nav-active":''} >Chat</NavLink>
                     </li>
                     <li>
-                        <NavLink to="/login-logout" className={({isActive})=>isActive?"nav-active":''} >Login/Logout</NavLink>
+                        <NavLink to="/login-logout" className={({isActive})=>isActive?"nav-active":''} >Ingresar</NavLink>
                     </li>
                 </ul>
             </nav>

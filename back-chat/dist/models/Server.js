@@ -61,7 +61,7 @@ class Server {
         this.app.use(express_1.default.static('public'));
     }
     sockets() {
-        this.io.on('connection', socket_controller_1.socketController);
+        this.io.on('connection', (socket) => (0, socket_controller_1.socketController)(socket, this.io));
     }
     listen() {
         this.server.listen(this.port, () => {

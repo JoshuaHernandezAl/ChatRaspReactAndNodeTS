@@ -3,6 +3,7 @@ import userRouter from "../routes/user.routes";
 import cors from "cors";
 import db from "../db/connection";
 import { socketController } from "../sockets/socket.controller";
+import { Socket } from "socket.io";
 
 class Server{
     private app: Application;
@@ -61,7 +62,7 @@ class Server{
     }
 
     sockets(){
-        this.io.on('connection',socketController);
+        this.io.on('connection',(socket:Socket) => socketController(socket,this.io));
     }
 
     listen(){

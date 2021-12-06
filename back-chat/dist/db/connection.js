@@ -9,7 +9,7 @@ dotenv_1.default.config();
 const db = new sequelize_1.Sequelize('ChatRaspTS', `${process.env.userDB}`, `${process.env.passwordDB}`, {
     host: 'localhost',
     dialect: 'mysql',
-    // logging:false,
+    logging: false,
 });
 exports.default = db;
 //# sourceMappingURL=connection.js.map
