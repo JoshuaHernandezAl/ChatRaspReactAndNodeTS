@@ -1,0 +1,7 @@
+back-chat/node_modules
+back-chat/.DS_Store
+front-chat/node_modules
+front-chat/.DS_Store
+.DS_Store
+chatRaspTS.code-workspace
+back-chat/.env
