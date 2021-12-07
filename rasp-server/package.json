@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  },
+  "name": "lcd-server",
+  "description": "This repository contains all the code for interfacing with a **16x2 character I2C liquid-crystal display (LCD)**. This accompanies my **Youtube tutorial**: [Raspberry Pi - Mini LCD Display Tutorial](https://www.youtube.com/watch?v=fR5XhHYzUK0).",
+  "version": "1.0.0",
+  "main": "app.js",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  },
+  "scripts": {
+    "start":"node ./app.js",
+    "dev":"nodemon ./app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JoshuaHernandezAl/ChatRaspReactAndNodeTS.git"
+  },
+  "keywords": [
+    "child_process-node-server-test"
+  ],
+  "author": "JoshuaHernandezAl",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JoshuaHernandezAl/ChatRaspReactAndNodeTS/issues"
+  },
+  "homepage": "https://github.com/JoshuaHernandezAl/ChatRaspReactAndNodeTS#readme"
+}
