@@ -16,10 +16,18 @@ exports.socketController = void 0;
 const validate_jwt_1 = require("../middlewares/validate-jwt");
 const Chat_1 = __importDefault(require("../models/Chat"));
 const shortid_1 = __importDefault(require("shortid"));
+const axios_1 = __importDefault(require("axios"));
 const chatMessages = new Chat_1.default();
 const socketController = (socket, io) => __awaiter(void 0, void 0, void 0, function* () {
     const { xtoken, username } = socket.handshake.headers;
     const user = yield (0, validate_jwt_1.validateJWT)(String(xtoken), socket.id);
+    yield (0, axios_1.default)({
+        method: 'POST',
+        url: process.env.iotServerUrl + '/lcd-display-connection',
+        data: {
+            username,
+        }
+    });
     if (user == socket.id) {
         eventsGuest(io, String(username), socket);
     }
@@ -32,17 +40,25 @@ const socketController = (socket, io) => __awaiter(void 0, void 0, void 0, funct
 });
 exports.socketController = socketController;
 const eventsGuest = (io, username, socket) => {
-    chatMessages.connectUser(username + (shortid_1.default.generate()));
+    const usernameSocket = username + (shortid_1.default.generate());
+    chatMessages.connectUser(usernameSocket);
     io.emit('active-users', chatMessages.usersArr);
     socket.emit('receive-msgs', chatMessages.last10);
     socket.on('disconnect', () => {
-        chatMessages.desconnectUser(username);
+        chatMessages.desconnectUser(usernameSocket);
         io.emit('active-users', chatMessages.usersArr);
     });
     socket.on('send-msg', ({ txtMessage: msg }) => {
-        chatMessages.sendMessage(username, msg);
+        chatMessages.sendMessage(usernameSocket, msg);
         io.emit('receive-msgs', chatMessages.last10);
-        console.log('rojo');
+        (0, axios_1.default)({
+            method: 'POST',
+            url: process.env.iotServerUrl + '/lcd-display-msg',
+            data: {
+                username: usernameSocket,
+                userType: 'guest'
+            }
+        });
     });
 };
 const eventsUserIdentified = (io, user, socket) => {
@@ -56,7 +72,14 @@ const eventsUserIdentified = (io, user, socket) => {
     socket.on('send-msg', ({ txtMessage: msg }) => {
         chatMessages.sendMessage(user, msg);
         io.emit('receive-msgs', chatMessages.last10);
-        console.log('azul');
+        (0, axios_1.default)({
+            method: 'POST',
+            url: process.env.iotServerUrl + '/lcd-display-msg',
+            data: {
+                username: user,
+                userType: 'auth'
+            }
+        });
     });
 };
 //# sourceMappingURL=socket.controller.js.map
